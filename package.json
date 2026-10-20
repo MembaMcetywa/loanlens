@@ -1,0 +1,41 @@
+{
+  "name": "loanlens",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "generate-routes": "tsr generate",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write . && eslint --fix .",
+    "check": "prettier --check .",
+    "tanstack": "tanstack"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "latest",
+    "@tanstack/react-router": "latest",
+    "@tanstack/react-router-ssr-query": "latest",
+    "@tanstack/react-start": "latest",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "latest",
+    "@tanstack/cli": "latest",
+    "@tanstack/eslint-config": "latest",
+    "@tanstack/router-cli": "^1.167.45",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.20.0",
+    "prettier": "^3.8.1",
+    "tailwindcss": "latest",
+    "typescript": "latest",
+    "vite": "^8.0.0"
+  }
+}
