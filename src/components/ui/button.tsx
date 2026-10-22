@@ -2,12 +2,11 @@ import * as React from 'react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 import { cn } from 'cn'
-import { Slot } from 'radix-ui'
 
 import { Spinner } from './spinner'
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-semibold whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring active:not-aria-[haspopup]:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-semibold whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring active:not-aria-[haspopup]:translate-y-px disabled:cursor-not-allowed disabled:not-data-[loading=true]:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -48,21 +47,28 @@ const Button = ({
   className,
   variant = 'default',
   size = 'default',
-  asChild = false,
   loading = false,
   disabled,
   children,
   'aria-label': ariaLabel,
+  onClick,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
     loading?: boolean
   }) => {
-  const Comp = asChild ? Slot.Root : 'button'
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (loading || disabled) {
+      event.preventDefault()
+      event.stopPropagation()
+      return
+    }
+
+    onClick?.(event)
+  }
 
   return (
-    <Comp
+    <button
       data-slot="button"
       data-variant={variant}
       data-size={size}
@@ -72,13 +78,14 @@ const Button = ({
       disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
+      onClick={handleClick}
     >
       {loading ? (
         <Spinner className="text-current" aria-hidden="true" />
       ) : (
         children
       )}
-    </Comp>
+    </button>
   )
 }
 
