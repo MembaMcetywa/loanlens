@@ -10,10 +10,10 @@ The application then returns an estimated eligibility result from a transparent,
 - TanStack Query for server communication
 - Zustand for global client state
 - Tailwind CSS
+- Shadcn as a ui components base
 - TypeScript
 - ESLint and Prettier
 - npm
-
 
 ## Run locally
 
@@ -96,81 +96,80 @@ income.
 
 The approval score below is a documented engineering assumption, made in order to reach a consistent and reusable policy model.
 
-| Factor | Weight |
-| --- | ---: |
-| Credit score | 30% |
-| Existing DTI | 20% |
-| New-loan affordability | 25% |
-| Employment | 15% |
-| Loan leverage | 10% |
+| Factor                 | Weight |
+| ---------------------- | -----: |
+| Credit score           |    30% |
+| Existing DTI           |    20% |
+| New-loan affordability |    25% |
+| Employment             |    15% |
+| Loan leverage          |    10% |
 
 Credit score points:
 
 | Credit score | Points |
-| --- | ---: |
-| 750-850 | 100 |
-| 700-749 | 90 |
-| 650-699 | 75 |
-| 600-649 | 55 |
-| 550-599 | 40 |
-| 300-549 | 20 |
+| ------------ | -----: |
+| 750-850      |    100 |
+| 700-749      |     90 |
+| 650-699      |     75 |
+| 600-649      |     55 |
+| 550-599      |     40 |
+| 300-549      |     20 |
 
 Existing DTI points:
 
-| Existing DTI | Points |
-| --- | ---: |
-| 0%-20% | 100 |
-| Above 20%-30% | 85 |
-| Above 30%-40% | 70 |
-| Above 40%-50% | 50 |
-| Above 50% | Hard failure |
+| Existing DTI  |       Points |
+| ------------- | -----------: |
+| 0%-20%        |          100 |
+| Above 20%-30% |           85 |
+| Above 30%-40% |           70 |
+| Above 40%-50% |           50 |
+| Above 50%     | Hard failure |
 
 New loan affordability is the average of the payment-use points and combined-DTI
 points.
 
-| Payment / disposable income | Points |
-| --- | ---: |
-| 0%-50% | 100 |
-| Above 50%-65% | 90 |
-| Above 65%-75% | 80 |
-| Above 75%-90% | 60 |
-| Above 90%-100% | 40 |
-| Above 100% | Hard failure |
+| Payment / disposable income |       Points |
+| --------------------------- | -----------: |
+| 0%-50%                      |          100 |
+| Above 50%-65%               |           90 |
+| Above 65%-75%               |           80 |
+| Above 75%-90%               |           60 |
+| Above 90%-100%              |           40 |
+| Above 100%                  | Hard failure |
 
-| Combined DTI | Points |
-| --- | ---: |
-| 0%-30% | 100 |
-| Above 30%-40% | 85 |
-| Above 40%-45% | 70 |
-| Above 45%-50% | 60 |
-| Above 50% | Hard failure |
+| Combined DTI  |       Points |
+| ------------- | -----------: |
+| 0%-30%        |          100 |
+| Above 30%-40% |           85 |
+| Above 40%-45% |           70 |
+| Above 45%-50% |           60 |
+| Above 50%     | Hard failure |
 
 Employment points:
 
-| Employment status and duration | Points |
-| --- | ---: |
-| Employed or self-employed, at least 24 months | 100 |
-| Employed or self-employed, 12-23 months | 85 |
-| Employed or self-employed, 6-11 months | 70 |
-| Employed or self-employed, 3-5 months | 50 |
-| Employed or self-employed, below 3 months | Hard failure |
-| Retired | 75 |
-| Unemployed | Hard failure |
+| Employment status and duration                |       Points |
+| --------------------------------------------- | -----------: |
+| Employed or self-employed, at least 24 months |          100 |
+| Employed or self-employed, 12-23 months       |           85 |
+| Employed or self-employed, 6-11 months        |           70 |
+| Employed or self-employed, 3-5 months         |           50 |
+| Employed or self-employed, below 3 months     | Hard failure |
+| Retired                                       |           75 |
+| Unemployed                                    | Hard failure |
 
 Loan leverage points:
 
-| LTI | Points |
-| --- | ---: |
-| 0%-50% | 100 |
-| Above 50%-75% | 85 |
-| Above 75%-100% | 70 |
-| Above 100%-150% | 50 |
-| Above 150% | 30 |
+| LTI             | Points |
+| --------------- | -----: |
+| 0%-50%          |    100 |
+| Above 50%-75%   |     85 |
+| Above 75%-100%  |     70 |
+| Above 100%-150% |     50 |
+| Above 150%      |     30 |
 
 The final score is rounded to a whole number. A score of at least 60 is required.
 Risk is low from 80 through 100, medium from 60 through 79, and high below 60.
-Affordability is good from 70 through 100, fair from 50 through 69, and poor below
-50.
+Affordability is good from 70 through 100, fair from 50 through 69, and poor below 50.
 
 ### Interest and amortization
 
@@ -178,13 +177,13 @@ The credit score band positions the interest rate inside the selected product's
 rate range.
 
 | Credit score | Position in rate range |
-| --- | ---: |
-| 750-850 | 0% |
-| 700-749 | 12.5% |
-| 650-699 | 25% |
-| 600-649 | 50% |
-| 550-599 | 75% |
-| 300-549 | 100% |
+| ------------ | ---------------------: |
+| 750-850      |                     0% |
+| 700-749      |                  12.5% |
+| 650-699      |                    25% |
+| 600-649      |                    50% |
+| 550-599      |                    75% |
+| 300-549      |                   100% |
 
 ```text
 interest rate = minimum rate + (maximum rate - minimum rate) * position
