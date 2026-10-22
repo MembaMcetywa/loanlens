@@ -179,7 +179,7 @@ const Home = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <dl className="grid grid-cols-2 gap-5">
+                    <dl className="grid gap-5">
                       <MetricItem label="Loan amount" value="R150,000" />
                       <MetricItem label="Monthly repayment" value="R4,128" />
                       <MetricItem label="Interest rate" value="18.5%" />
