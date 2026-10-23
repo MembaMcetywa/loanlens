@@ -1,11 +1,22 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
 import loanLensLogo from '@/assets/loanlens-logo.svg'
 import neuralNetwork from '@/assets/neural-network.svg'
 import { Button } from '@/components/ui/button'
+import { useLoanApplicationStore } from '@/stores/loanApplicationStore'
 
 const Home = () => {
+  const navigate = useNavigate()
+  const resetApplication = useLoanApplicationStore(
+    (state) => state.resetApplication,
+  )
+
+  const handleStartApplication = () => {
+    resetApplication()
+    void navigate({ to: '/application' })
+  }
+
   return (
     <main className="m-0 min-h-screen w-full max-w-none overflow-hidden px-5 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-20">
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-7xl grid-rows-[auto_1fr] lg:min-h-[calc(100vh-6rem)]">
@@ -18,12 +29,14 @@ const Home = () => {
               <span className="block text-primary">could qualify for</span>
             </h1>
             <p className="mt-7 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Use our advanced loan eligibility estimator to see what you could qualify for.
+              Use our advanced loan eligibility estimator to see what you could
+              qualify for.
             </p>
             <Button
               type="button"
               size="xl"
               className="mt-10 w-full justify-center sm:w-auto sm:min-w-72"
+              onClick={handleStartApplication}
             >
               Check my eligibility
               <ArrowRightIcon data-icon="inline-end" aria-hidden="true" />
