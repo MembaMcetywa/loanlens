@@ -32,9 +32,8 @@ type LoanApplicationState = {
   eligibilityFlow: EligibilityFlowStep[]
   eligibilityResult: LoanEligibilityResponse | null
   completeCurrentStep: (data: EligibilityFlowData) => void
-  createLoanEligibilityRequest: (
-    loanDetails: EligibilityFlowData,
-  ) => LoanEligibilityRequest
+  createLoanEligibilityRequest: () => LoanEligibilityRequest
+  saveCurrentStep: (data: EligibilityFlowData) => void
   setEligibilityResult: (result: LoanEligibilityResponse) => void
   goToPreviousStep: () => boolean
   resetApplication: () => void
@@ -133,10 +132,11 @@ const useLoanApplicationStore = create<LoanApplicationState>(
           }),
         })
       },
-      createLoanEligibilityRequest(loanDetails) {
+      createLoanEligibilityRequest() {
         const { eligibilityFlow: currentFlow } = get()
         const applicantDetails = currentFlow[0].data
         const financialDetails = currentFlow[1].data
+        const loanDetails = currentFlow[2].data
 
         return {
           personalInfo: {
@@ -159,6 +159,15 @@ const useLoanApplicationStore = create<LoanApplicationState>(
             loanPurpose: loanDetails.loanPurpose as LoanPurpose,
           },
         }
+      },
+      saveCurrentStep(data) {
+        const { activeStepId, eligibilityFlow: currentFlow } = get()
+
+        set({
+          eligibilityFlow: currentFlow.map(function saveActiveStep(step) {
+            return step.id === activeStepId ? { ...step, data } : step
+          }),
+        })
       },
       setEligibilityResult(result) {
         set({ eligibilityResult: result })
