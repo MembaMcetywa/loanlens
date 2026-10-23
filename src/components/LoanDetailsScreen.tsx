@@ -11,7 +11,6 @@ const productOptions = [
 ] as const
 
 const purposeOptions = [
-  { value: 'debt_consolidation', label: 'Debt consolidation' },
   { value: 'home_improvement', label: 'Home improvement' },
   { value: 'education', label: 'Education' },
   { value: 'medical', label: 'Medical' },
