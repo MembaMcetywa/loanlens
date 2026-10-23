@@ -9,6 +9,12 @@ import type {
 import { EligibilityResultScreen } from '@/components/EligibilityResultScreen'
 import { FinancialDetailsScreen } from '@/components/FinancialDetailsScreen'
 import { LoanDetailsScreen } from '@/components/LoanDetailsScreen'
+import type {
+  EmploymentStatus,
+  LoanEligibilityRequest,
+  LoanEligibilityResponse,
+  LoanPurpose,
+} from '@/types/loan'
 
 type EligibilityFlowStep = {
   id: number
@@ -24,7 +30,12 @@ type EligibilityFlowStep = {
 type LoanApplicationState = {
   activeStepId: number
   eligibilityFlow: EligibilityFlowStep[]
+  eligibilityResult: LoanEligibilityResponse | null
   completeCurrentStep: (data: EligibilityFlowData) => void
+  createLoanEligibilityRequest: (
+    loanDetails: EligibilityFlowData,
+  ) => LoanEligibilityRequest
+  setEligibilityResult: (result: LoanEligibilityResponse) => void
   goToPreviousStep: () => boolean
   resetApplication: () => void
 }
@@ -100,6 +111,7 @@ const useLoanApplicationStore = create<LoanApplicationState>(
     return {
       activeStepId: initialEligibilityFlow[0].id,
       eligibilityFlow: initialEligibilityFlow,
+      eligibilityResult: null,
       completeCurrentStep(data) {
         const { activeStepId, eligibilityFlow: currentFlow } = get()
         const activeStepIndex = currentFlow.findIndex(
@@ -120,6 +132,36 @@ const useLoanApplicationStore = create<LoanApplicationState>(
               : step
           }),
         })
+      },
+      createLoanEligibilityRequest(loanDetails) {
+        const { eligibilityFlow: currentFlow } = get()
+        const applicantDetails = currentFlow[0].data
+        const financialDetails = currentFlow[1].data
+
+        return {
+          personalInfo: {
+            age: Number(applicantDetails.age),
+            employmentStatus:
+              applicantDetails.employmentStatus as EmploymentStatus,
+            employmentDuration: applicantDetails.employmentDuration
+              ? Number(applicantDetails.employmentDuration)
+              : undefined,
+          },
+          financialInfo: {
+            monthlyIncome: Number(financialDetails.monthlyIncome),
+            monthlyExpenses: Number(financialDetails.monthlyExpenses),
+            existingDebt: Number(financialDetails.existingDebt),
+            creditScore: Number(financialDetails.creditScore),
+          },
+          loanDetails: {
+            requestedAmount: Number(loanDetails.requestedAmount),
+            loanTerm: Number(loanDetails.loanTerm),
+            loanPurpose: loanDetails.loanPurpose as LoanPurpose,
+          },
+        }
+      },
+      setEligibilityResult(result) {
+        set({ eligibilityResult: result })
       },
       goToPreviousStep() {
         const { activeStepId, eligibilityFlow: currentFlow } = get()
@@ -142,6 +184,7 @@ const useLoanApplicationStore = create<LoanApplicationState>(
         set({
           activeStepId: resetFlow[0].id,
           eligibilityFlow: resetFlow,
+          eligibilityResult: null,
         })
       },
     }
