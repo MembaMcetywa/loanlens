@@ -20,7 +20,7 @@ function calculateMonthlyPayment(
   return (loanAmount * monthlyRate * compoundRate) / (compoundRate - 1)
 }
 
-function calculateAmortization(
+function calculateAmortisation(
   loanAmount: number,
   loanTerm: number,
   interestRate: number,
@@ -68,4 +68,4 @@ function calculateAmortization(
   }
 }
 
-export { calculateAmortization, calculateMonthlyPayment }
+export { calculateAmortisation, calculateMonthlyPayment }

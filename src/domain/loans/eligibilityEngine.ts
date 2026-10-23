@@ -1,8 +1,8 @@
 import { calculateAffordability } from '@/domain/loans/affordability'
 import {
-  calculateAmortization,
+  calculateAmortisation,
   calculateMonthlyPayment,
-} from '@/domain/loans/amortization'
+} from '#/domain/loans/amortisation'
 import { calculateApprovalScore } from '@/domain/loans/approvalScore'
 import { calculateInterestRate } from '@/domain/loans/products'
 import type {
@@ -130,7 +130,7 @@ function calculateLoanEligibility(
     ? requestedAmount
     : maxAmount
   const repayment = recommendedAmount
-    ? calculateAmortization(
+    ? calculateAmortisation(
         recommendedAmount,
         request.loanDetails.loanTerm,
         requestedEvaluation.interestRate,
