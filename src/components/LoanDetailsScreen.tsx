@@ -1,9 +1,12 @@
 import * as React from 'react'
+import { useMutation } from '@tanstack/react-query'
 
+import { loanEligibilityMutationOptions } from '@/api/loanEligibility'
 import { ApplicationScreen } from '@/components/ApplicationScreen'
 import type { EligibilityFlowScreenProps } from '@/components/ApplicationScreen'
 import { InputField } from '@/components/ui/InputField'
 import { SelectField } from '@/components/ui/SelectField'
+import { useLoanApplicationStore } from '@/stores/loanApplicationStore'
 
 const productOptions = [
   { value: 'personal_loan', label: 'Personal Loan' },
@@ -29,12 +32,31 @@ const LoanDetailsScreen = ({
   onContinue,
 }: EligibilityFlowScreenProps) => {
   const [formData, setFormData] = React.useState(data)
+  const createLoanEligibilityRequest = useLoanApplicationStore(
+    (state) => state.createLoanEligibilityRequest,
+  )
+  const saveCurrentStep = useLoanApplicationStore(
+    (state) => state.saveCurrentStep,
+  )
+  const setEligibilityResult = useLoanApplicationStore(
+    (state) => state.setEligibilityResult,
+  )
+  const eligibilityMutation = useMutation(loanEligibilityMutationOptions())
 
   const updateField = (field: string, value: string) => {
     setFormData((currentData) => ({ ...currentData, [field]: value }))
   }
 
-  const handleContinue = () => onContinue(formData)
+  const handleContinue = () => {
+    saveCurrentStep(formData)
+
+    eligibilityMutation.mutate(createLoanEligibilityRequest(), {
+      onSuccess: (result) => {
+        setEligibilityResult(result)
+        onContinue(formData)
+      },
+    })
+  }
 
   return (
     <ApplicationScreen
@@ -45,6 +67,7 @@ const LoanDetailsScreen = ({
       onBack={onBack}
       onContinue={handleContinue}
       continueLabel="Check eligibility"
+      isSubmitting={eligibilityMutation.isPending}
     >
       <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2">
         <SelectField
