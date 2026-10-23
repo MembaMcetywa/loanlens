@@ -13,6 +13,7 @@ type ApplicationScreenProps = {
   onBack: () => void
   onContinue: () => void
   continueLabel?: string
+  isSubmitting?: boolean
 }
 
 type EligibilityFlowData = Record<string, string>
@@ -36,6 +37,7 @@ const ApplicationScreen = ({
   onBack,
   onContinue,
   continueLabel = 'Continue',
+  isSubmitting = false,
 }: ApplicationScreenProps) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -65,7 +67,11 @@ const ApplicationScreen = ({
             {children}
 
             <div className="mt-14 grid gap-4 sm:flex sm:flex-row-reverse sm:justify-start">
-              <Button type="submit" className="w-full sm:w-auto">
+              <Button
+                type="submit"
+                className="w-full sm:w-auto"
+                loading={isSubmitting}
+              >
                 {continueLabel}
               </Button>
               <Button
