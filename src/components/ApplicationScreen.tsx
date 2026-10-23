@@ -3,6 +3,7 @@ import type { FormEvent, ReactNode } from 'react'
 import loanLensLogo from '@/assets/loanlens-logo.svg'
 import { Button } from '@/components/ui/button'
 import { Stepper } from '@/components/ui/Stepper'
+import { useNavigate } from '@tanstack/react-router'
 
 type ApplicationScreenProps = {
   currentStep: number
@@ -44,10 +45,21 @@ const ApplicationScreen = ({
     onContinue()
   }
 
+  const navigate = useNavigate()
+
+  const handleNaivgateHome = () => {
+    void navigate({ to: '/' })
+  }
+
   return (
     <main className="min-h-screen px-5 py-8 sm:px-8 lg:px-12 lg:py-10">
       <div className="mx-auto w-full max-w-5xl">
-        <img src={loanLensLogo} alt="LoanLens" className="h-8 w-auto sm:h-9" />
+        <img
+          src={loanLensLogo}
+          alt="LoanLens"
+          className="h-8 w-auto sm:h-9 cursor-pointer"
+          onClick={handleNaivgateHome}
+        />
 
         <div className="mx-auto mt-12 w-full max-w-4xl sm:mt-16">
           <Stepper currentStep={currentStep} totalSteps={totalSteps} />
