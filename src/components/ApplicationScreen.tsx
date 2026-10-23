@@ -3,6 +3,7 @@ import type { FormEvent, ReactNode } from 'react'
 import loanLensLogo from '@/assets/loanlens-logo.svg'
 import { Button } from '@/components/ui/button'
 import { Stepper } from '@/components/ui/Stepper'
+import { useNavigate } from '@tanstack/react-router'
 
 type ApplicationScreenProps = {
   currentStep: number
@@ -13,6 +14,7 @@ type ApplicationScreenProps = {
   onBack: () => void
   onContinue: () => void
   continueLabel?: string
+  isSubmitting?: boolean
 }
 
 type EligibilityFlowData = Record<string, string>
@@ -36,16 +38,28 @@ const ApplicationScreen = ({
   onBack,
   onContinue,
   continueLabel = 'Continue',
+  isSubmitting = false,
 }: ApplicationScreenProps) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onContinue()
   }
 
+  const navigate = useNavigate()
+
+  const handleNaivgateHome = () => {
+    void navigate({ to: '/' })
+  }
+
   return (
     <main className="min-h-screen px-5 py-8 sm:px-8 lg:px-12 lg:py-10">
       <div className="mx-auto w-full max-w-5xl">
-        <img src={loanLensLogo} alt="LoanLens" className="h-8 w-auto sm:h-9" />
+        <img
+          src={loanLensLogo}
+          alt="LoanLens"
+          className="h-8 w-auto sm:h-9 cursor-pointer"
+          onClick={handleNaivgateHome}
+        />
 
         <div className="mx-auto mt-12 w-full max-w-4xl sm:mt-16">
           <Stepper currentStep={currentStep} totalSteps={totalSteps} />
@@ -65,7 +79,11 @@ const ApplicationScreen = ({
             {children}
 
             <div className="mt-14 grid gap-4 sm:flex sm:flex-row-reverse sm:justify-start">
-              <Button type="submit" className="w-full sm:w-auto">
+              <Button
+                type="submit"
+                className="w-full sm:w-auto"
+                loading={isSubmitting}
+              >
                 {continueLabel}
               </Button>
               <Button
