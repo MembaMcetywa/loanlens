@@ -11,6 +11,7 @@ The application then returns an estimated eligibility result from a transparent,
 - Zustand for global client state
 - Tailwind CSS
 - Shadcn as a ui components base
+- Zod as a product wide validation engine
 - TypeScript
 - ESLint and Prettier
 - npm
