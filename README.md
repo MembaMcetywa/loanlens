@@ -15,6 +15,7 @@ The application then returns an estimated eligibility result from a transparent,
 - TypeScript
 - ESLint and Prettier
 - npm
+- dotLottie-react for lightweight animations
 
 ## Run locally
 
