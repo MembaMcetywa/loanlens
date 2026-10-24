@@ -2,8 +2,6 @@ import * as React from 'react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import type { DotLottie } from '@lottiefiles/dotlottie-react'
 
-import successAnimation from '@/assets/success.lottie?url'
-
 type ApplicationSuccessModalProps = {
   firstName: string
   isOpen: boolean
@@ -16,20 +14,12 @@ const ApplicationSuccessModal = ({
   onComplete,
 }: ApplicationSuccessModalProps) => {
   const [dotLottie, setDotLottie] = React.useState<DotLottie | null>(null)
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const message = firstName
     ? `${firstName}, your loan application has been received, we will be in touch.`
     : 'Your loan application has been received, we will be in touch.'
 
   React.useEffect(() => {
     if (!isOpen) {
-      return
-    }
-
-    if (prefersReducedMotion) {
-      onComplete()
       return
     }
 
@@ -57,18 +47,18 @@ const ApplicationSuccessModal = ({
       dotLottie.removeEventListener('loadError', finishAnimation)
       dotLottie.removeEventListener('load', playAnimation)
     }
-  }, [dotLottie, isOpen, onComplete, prefersReducedMotion])
+  }, [dotLottie, isOpen, onComplete])
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 px-5 backdrop-blur-sm transition-opacity duration-150 ${isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'}`}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 px-(--layout-page-inline) backdrop-blur-sm transition-opacity duration-150 ${isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="application-success-title"
       aria-describedby="application-success-message"
       aria-hidden={!isOpen}
     >
-      <div className="w-full max-w-md rounded-xl border border-primary/20 bg-card p-6 text-center shadow-xl sm:p-8">
+      <div className="w-full max-w-md rounded-xl border border-primary/20 bg-card p-(--layout-card-gap) text-center shadow-xl">
         <h2
           id="application-success-title"
           className="font-heading text-3xl font-semibold tracking-tight text-foreground"
@@ -77,17 +67,17 @@ const ApplicationSuccessModal = ({
         </h2>
         <p
           id="application-success-message"
-          className="mt-3 text-base leading-7 text-muted-foreground"
+          className="mt-2 text-base leading-7 text-muted-foreground"
         >
           {message}
         </p>
 
         <DotLottieReact
-          src={successAnimation}
+          src="/success.lottie"
           autoplay={false}
           loop={false}
           dotLottieRefCallback={setDotLottie}
-          className="mx-auto mt-5 h-48 w-full sm:h-56"
+          className="mx-auto mt-4 h-48 w-full sm:h-56"
           aria-hidden="true"
         />
       </div>

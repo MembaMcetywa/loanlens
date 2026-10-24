@@ -58,7 +58,7 @@ const ApplicantDetailsScreen = ({
       onBack={onBack}
       onContinue={handleContinue}
     >
-      <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2">
+      <div className="grid gap-(--layout-field-gap) sm:grid-cols-2">
         <InputField
           label="First name"
           name="firstName"
@@ -83,7 +83,6 @@ const ApplicantDetailsScreen = ({
           name="age"
           type="number"
           min={18}
-          max={65}
           inputMode="numeric"
           placeholder="Enter age"
           value={formData.age}
@@ -109,7 +108,7 @@ const ApplicantDetailsScreen = ({
           disabled={!employmentDetailsEnabled}
         />
         <InputField
-          label="Employment duration"
+          label="Employment duration (in months)"
           name="employmentDuration"
           type="number"
           min={3}

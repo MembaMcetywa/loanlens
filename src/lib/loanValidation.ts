@@ -7,10 +7,9 @@ function validateLoan(request: unknown, product: LoanProduct) {
     personalInfo: z
       .object({
         age: z
-          .number({ error: 'Age must be between 18 and 65' })
-          .int({ error: 'Age must be between 18 and 65' })
-          .min(18, { error: 'Age must be between 18 and 65' })
-          .max(65, { error: 'Age must be between 18 and 65' }),
+          .number({ error: 'Age must be 18 or older' })
+          .int({ error: 'Age must be 18 or older' })
+          .min(18, { error: 'Age must be 18 or older' }),
         employmentStatus: z.enum(
           ['employed', 'self_employed', 'unemployed', 'retired'],
           { error: 'Please select your employment status' },

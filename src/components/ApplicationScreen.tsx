@@ -52,7 +52,7 @@ const ApplicationScreen = ({
   }
 
   return (
-    <main className="min-h-screen px-5 py-8 sm:px-8 lg:px-12 lg:py-10">
+    <main className="min-h-screen px-(--layout-page-inline) py-(--layout-page-block)">
       <div className="mx-auto w-full max-w-5xl">
         <img
           src={loanLensLogo}
@@ -61,10 +61,10 @@ const ApplicationScreen = ({
           onClick={handleNaivgateHome}
         />
 
-        <div className="mx-auto mt-12 w-full max-w-4xl sm:mt-16">
+        <div className="mx-auto mt-(--layout-flow-start) w-full max-w-4xl">
           <Stepper currentStep={currentStep} totalSteps={totalSteps} />
 
-          <header className="mx-auto mt-10 max-w-2xl text-center sm:mt-12">
+          <header className="mx-auto mt-(--layout-section-gap) max-w-2xl text-center">
             <h1 className="font-heading text-3xl leading-tight font-semibold tracking-tight text-foreground sm:text-4xl">
               {title}
             </h1>
@@ -75,10 +75,10 @@ const ApplicationScreen = ({
             ) : null}
           </header>
 
-          <form className="mt-10 sm:mt-12" onSubmit={handleSubmit}>
+          <form className="mt-(--layout-content-gap)" onSubmit={handleSubmit}>
             {children}
 
-            <div className="mt-14 grid gap-4 sm:flex sm:flex-row-reverse sm:justify-start">
+            <div className="mt-(--layout-action-gap) grid gap-3 sm:flex sm:flex-row-reverse sm:justify-start">
               <Button
                 type="submit"
                 className="w-full sm:w-auto"
