@@ -2,7 +2,7 @@
 
 LoanLens is a responsive loan eligibility simulator. A customer supplies the
 personal, financial, and loan information defined by the supplied API contract.
-The application then returns an estimated eligibility result from a transparent, decision policy.
+The application then returns an estimated eligibility result from a transparent decision policy.
 
 ## Stack
 
@@ -26,14 +26,13 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-Available checks and build commands:
+To test LoanLens on a phone connected to the same local network, run:
 
 ```bash
-npm run lint
-npm run check
-npm run build
-npm run preview
+npm run dev:mobile
 ```
+
+Scan the QR code shown in the terminal.
 
 ## Application interpretation
 
