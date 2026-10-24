@@ -24,15 +24,28 @@ const Stepper = ({ currentStep, totalSteps, className }: StepperProps) => {
         Step {currentStep} of {totalSteps}
       </p>
       <div className="flex w-full gap-2" aria-hidden="true">
-        {Array.from({ length: totalSteps }, (_, index) => (
-          <span
-            key={index}
-            className={cn(
-              'h-1 flex-1 rounded-full',
-              index < currentStep ? 'bg-primary' : 'bg-muted',
-            )}
-          />
-        ))}
+        {Array.from({ length: totalSteps }, (_, index) => {
+          const isReached = index < currentStep
+          const isCurrent = index === currentStep - 1
+
+          return (
+            <span
+              key={index}
+              className="h-1 flex-1 overflow-hidden rounded-full bg-muted"
+            >
+              <span
+                className={cn(
+                  'block h-full rounded-full bg-primary',
+                  isCurrent
+                    ? 'w-0 animate-step-fill'
+                    : isReached
+                      ? 'w-full'
+                      : 'w-0',
+                )}
+              />
+            </span>
+          )
+        })}
       </div>
     </div>
   )

@@ -113,3 +113,17 @@
 @utility animate-name-character {
   animation: name-character-enter 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@keyframes step-fill {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@utility animate-step-fill {
+  animation: step-fill 240ms linear both;
+}
