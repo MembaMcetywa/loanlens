@@ -108,7 +108,7 @@ const ApplicantDetailsScreen = ({
           disabled={!employmentDetailsEnabled}
         />
         <InputField
-          label="Employment duration"
+          label="Employment duration (in months)"
           name="employmentDuration"
           type="number"
           min={3}
