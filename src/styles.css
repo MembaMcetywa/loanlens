@@ -54,6 +54,33 @@
   --input: #d9dee2;
   --ring: #087747;
   --radius: 0.5rem;
+
+  --layout-page-inline: 1.25rem;
+  --layout-page-block: 1.5rem;
+  --layout-flow-start: 2rem;
+  --layout-section-gap: 1.5rem;
+  --layout-content-gap: 1.5rem;
+  --layout-field-gap: 1.25rem;
+  --layout-action-gap: 2rem;
+  --layout-card-gap: 1.25rem;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --layout-page-inline: 2rem;
+    --layout-page-block: 2rem;
+    --layout-flow-start: 2.5rem;
+    --layout-section-gap: 2rem;
+    --layout-content-gap: 2rem;
+    --layout-field-gap: 1.5rem;
+    --layout-action-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --layout-page-inline: 3rem;
+  }
 }
 
 @layer base {
@@ -85,10 +112,4 @@
 
 @utility animate-name-character {
   animation: name-character-enter 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-name-character {
-    animation: none;
-  }
 }
