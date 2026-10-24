@@ -73,7 +73,7 @@ const EligibilityResultScreen = ({
 
   return (
     <>
-      <main className="min-h-screen px-5 py-8 sm:px-8 lg:h-dvh lg:min-h-0 lg:overflow-hidden lg:px-12 lg:py-6">
+      <main className="min-h-screen px-(--layout-page-inline) py-(--layout-page-block) lg:h-dvh lg:min-h-0 lg:overflow-hidden">
         <div className="mx-auto w-full max-w-5xl lg:flex lg:h-full lg:flex-col">
           <img
             src={loanLensLogo}
@@ -82,10 +82,10 @@ const EligibilityResultScreen = ({
             onClick={handleDone}
           />
 
-          <section className="mx-auto mt-12 w-full max-w-3xl sm:mt-16 lg:my-auto">
+          <section className="mx-auto mt-(--layout-flow-start) w-full max-w-3xl lg:my-auto">
             <header className="mx-auto max-w-2xl text-center">
               <Badge variant={badgeVariant}>{badgeLabel}</Badge>
-              <h1 className="mt-5 font-heading text-3xl leading-tight font-semibold tracking-tight text-foreground sm:text-4xl lg:mt-3">
+              <h1 className="mt-4 font-heading text-3xl leading-tight font-semibold tracking-tight text-foreground sm:text-4xl">
                 {pageTitle}
               </h1>
               {pageSubTitle ? (
@@ -97,7 +97,7 @@ const EligibilityResultScreen = ({
 
             <Card
               variant={hasRecommendation ? 'accent' : 'destructive'}
-              className="mt-10 sm:mt-12 lg:mt-5 lg:[--card-spacing:--spacing(4)]"
+              className="mt-(--layout-content-gap) [--card-spacing:var(--layout-card-gap)]"
             >
               <CardHeader>
                 <CardTitle>Loan estimate</CardTitle>
@@ -106,7 +106,7 @@ const EligibilityResultScreen = ({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <dl className="grid gap-7 sm:grid-cols-2 lg:gap-x-7 lg:gap-y-4">
+                <dl className="grid gap-(--layout-field-gap) sm:grid-cols-2">
                   <MetricItem
                     label="Loan amount"
                     value={`R${currencyFormatter.format(recommendedLoan.recommendedAmount)}`}
@@ -142,7 +142,7 @@ const EligibilityResultScreen = ({
                   />
                 </dl>
               </CardContent>
-              <CardFooter className="mt-2 grid gap-4 sm:flex sm:flex-row-reverse sm:justify-start lg:mt-0">
+              <CardFooter className="grid gap-3 sm:flex sm:flex-row-reverse sm:justify-start">
                 {hasRecommendation ? (
                   <Button
                     type="button"

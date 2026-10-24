@@ -58,7 +58,7 @@ const ApplicantDetailsScreen = ({
       onBack={onBack}
       onContinue={handleContinue}
     >
-      <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2">
+      <div className="grid gap-(--layout-field-gap) sm:grid-cols-2">
         <InputField
           label="First name"
           name="firstName"
