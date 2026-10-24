@@ -6,21 +6,23 @@ import { ApplicationScreen } from '@/components/ApplicationScreen'
 import type { EligibilityFlowScreenProps } from '@/components/ApplicationScreen'
 import { InputField } from '@/components/ui/InputField'
 import { SelectField } from '@/components/ui/SelectField'
+import { findLoanProduct, loanProducts } from '@/domain/loans/products'
 import { useLoanApplicationStore } from '@/stores/loanApplicationStore'
+import type { LoanProductId, LoanPurpose } from '@/types/loan'
 
-const productOptions = [
-  { value: 'personal_loan', label: 'Personal Loan' },
-  { value: 'vehicle_loan', label: 'Vehicle Finance' },
-] as const
+const productOptions = loanProducts.map((product) => ({
+  value: product.id,
+  label: product.name,
+}))
 
-const purposeOptions = [
-  { value: 'home_improvement', label: 'Home improvement' },
-  { value: 'education', label: 'Education' },
-  { value: 'medical', label: 'Medical' },
-  { value: 'new_vehicle', label: 'New vehicle' },
-  { value: 'used_vehicle', label: 'Used vehicle' },
-  { value: 'other', label: 'Other' },
-] as const
+const purposeLabels: Record<LoanPurpose, string> = {
+  home_improvement: 'Home improvement',
+  education: 'Education',
+  medical: 'Medical',
+  other: 'Other',
+  new_vehicle: 'New vehicle',
+  used_vehicle: 'Used vehicle',
+}
 
 const LoanDetailsScreen = ({
   stepNumber,
@@ -32,6 +34,12 @@ const LoanDetailsScreen = ({
   onContinue,
 }: EligibilityFlowScreenProps) => {
   const [formData, setFormData] = React.useState(data)
+  const selectedProduct = findLoanProduct(formData.loanProduct as LoanProductId)
+  const purposeOptions =
+    selectedProduct?.purposes.map((purpose) => ({
+      value: purpose,
+      label: purposeLabels[purpose],
+    })) ?? []
   const createLoanEligibilityRequest = useLoanApplicationStore(
     (state) => state.createLoanEligibilityRequest,
   )
@@ -45,6 +53,14 @@ const LoanDetailsScreen = ({
 
   const updateField = (field: string, value: string) => {
     setFormData((currentData) => ({ ...currentData, [field]: value }))
+  }
+
+  const handleProductChange = (value: string) => {
+    setFormData((currentData) => ({
+      ...currentData,
+      loanProduct: value,
+      loanPurpose: '',
+    }))
   }
 
   const handleContinue = () => {
@@ -76,7 +92,7 @@ const LoanDetailsScreen = ({
           placeholder="Select loan product"
           options={productOptions}
           value={formData.loanProduct}
-          onValueChange={(value) => updateField('loanProduct', value)}
+          onValueChange={handleProductChange}
           required
         />
         <SelectField
@@ -86,6 +102,7 @@ const LoanDetailsScreen = ({
           options={purposeOptions}
           value={formData.loanPurpose}
           onValueChange={(value) => updateField('loanPurpose', value)}
+          disabled={!selectedProduct}
           required
         />
         <InputField
