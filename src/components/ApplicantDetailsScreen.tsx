@@ -83,7 +83,6 @@ const ApplicantDetailsScreen = ({
           name="age"
           type="number"
           min={18}
-          max={65}
           inputMode="numeric"
           placeholder="Enter age"
           value={formData.age}

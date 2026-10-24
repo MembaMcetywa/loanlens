@@ -202,7 +202,8 @@ places. The final schedule payment clears any remaining balance caused by cent
 rounding. Total repayment and total interest come from the final schedule. The
 maximum qualifying amount is rounded down to the nearest R100.
 
-Boundary values are inclusive. This includes age 18 and 65, credit score 300 and
+Boundary values are inclusive. Applicants must be at least 18 years old. There is
+no maximum applicant age. Other inclusive boundaries include credit score 300 and
 850, three months of employment, 50% combined DTI, a payment equal to disposable
 income, an approval score of 60, and all product limits.
 
