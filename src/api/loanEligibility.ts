@@ -1,10 +1,10 @@
 import { mutationOptions } from '@tanstack/react-query'
 import { createServerFn } from '@tanstack/react-start'
 
-import { calculateLoanEligibility } from '@/domain/loans/eligibilityEngine'
-import { findLoanProductByPurpose } from '@/domain/loans/products'
-import { validateLoan } from '@/lib/loanValidation'
+import { calculateLoanEligibility } from '@/domain/eligibilityEngine'
+import { findLoanProductByPurpose } from '@/domain/products'
 import type { LoanEligibilityRequest } from '@/types/loan'
+import { validateLoan } from '@/utils/loanValidation'
 
 const responseDelay = 800
 

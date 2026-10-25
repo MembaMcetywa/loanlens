@@ -13,6 +13,7 @@ The application then returns an estimated eligibility result from a transparent 
 - Shadcn as a ui components base
 - Zod as a product wide validation engine
 - TypeScript
+- Vitest
 - ESLint and Prettier
 - npm
 - dotLottie-react for lightweight animations
@@ -26,13 +27,19 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-To test LoanLens on a phone connected to the same local network, run:
+To test on a phone connected to the same local network, run:
 
 ```bash
 npm run dev:mobile
 ```
 
 Scan the QR code shown in the terminal.
+
+## Run unit tests
+
+```bash
+npm run test
+```
 
 ## Application interpretation
 
