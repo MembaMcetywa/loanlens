@@ -104,7 +104,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             role="tooltip"
             aria-labelledby={titleId}
             aria-describedby={bodyId}
-            className="animate-mobile-tooltip-enter fixed inset-x-[var(--layout-page-inline)] bottom-[max(var(--layout-page-block),env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_(var(--layout-page-block)_*_2))] overflow-y-auto rounded-xl border border-border bg-background p-5 text-foreground shadow-xl [z-index:var(--layer-tooltip)]"
+            className="animate-mobile-tooltip-enter fixed inset-x-(--layout-page-inline) bottom-[max(var(--layout-page-block),env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_(var(--layout-page-block)_*_2))] overflow-y-auto rounded-xl border border-border bg-background p-5 text-foreground shadow-xl [z-index:var(--layer-tooltip)]"
             onClick={handleContentClick}
           >
             {content}
