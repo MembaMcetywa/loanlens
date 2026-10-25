@@ -23,12 +23,12 @@ const Home = () => {
         <img src={loanLensLogo} alt="LoanLens" className="h-8 w-auto sm:h-9" />
 
         <section className="grid items-center gap-(--layout-section-gap) py-(--layout-section-gap) lg:grid-cols-[minmax(0,1fr)_minmax(26rem,0.95fr)]">
-          <div className="flex max-w-2xl flex-col items-start">
-            <h1 className="font-heading text-5xl leading-[1.02] font-semibold tracking-[-0.045em] text-foreground sm:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
+          <div className="flex max-w-2xl flex-col items-center md:items-start">
+            <h1 className="font-heading w-full text-5xl text-center md:text-left leading-[1.02] font-semibold tracking-[-0.045em] text-foreground sm:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
               <span className="block">See what you</span>
               <span className="block text-primary">could qualify for</span>
             </h1>
-            <p className="mt-(--layout-content-gap) max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
+            <p className="mt-(--layout-content-gap) max-w-xl text-base leading-7 text-muted-foreground sm:text-lg text-center md:text-left">
               Use our advanced loan eligibility estimator to see what you could
               qualify for.
             </p>

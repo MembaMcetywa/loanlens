@@ -55,6 +55,11 @@
   --ring: #087747;
   --radius: 0.5rem;
 
+  --layer-select: 40;
+  --layer-modal: 50;
+  --layer-tooltip-overlay: 90;
+  --layer-tooltip: 100;
+
   --layout-page-inline: 1.25rem;
   --layout-page-block: 1.5rem;
   --layout-flow-start: 2rem;
@@ -126,4 +131,32 @@
 
 @utility animate-step-fill {
   animation: step-fill 240ms linear both;
+}
+
+@keyframes mobile-tooltip-enter {
+  from {
+    transform: translateY(1rem);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@utility animate-mobile-tooltip-enter {
+  animation: mobile-tooltip-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes desktop-tooltip-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@utility animate-desktop-tooltip-enter {
+  animation: desktop-tooltip-enter 180ms ease-out both;
 }
