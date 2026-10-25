@@ -6,7 +6,7 @@ import { ApplicationScreen } from '@/components/ApplicationScreen'
 import type { EligibilityFlowScreenProps } from '@/components/ApplicationScreen'
 import { InputField } from '@/components/ui/InputField'
 import { SelectField } from '@/components/ui/SelectField'
-import { findLoanProduct, loanProducts } from '@/domain/loans/products'
+import { findLoanProduct, loanProducts } from '@/domain/products'
 import { useLoanApplicationStore } from '@/stores/loanApplicationStore'
 import type { LoanProductId, LoanPurpose } from '@/types/loan'
 

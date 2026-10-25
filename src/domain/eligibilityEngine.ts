@@ -1,10 +1,10 @@
-import { calculateAffordability } from '@/domain/loans/affordability'
+import { calculateAffordability } from '@/domain/affordability'
 import {
   calculateAmortisation,
   calculateMonthlyPayment,
-} from '#/domain/loans/amortisation'
-import { calculateApprovalScore } from '@/domain/loans/approvalScore'
-import { calculateInterestRate } from '@/domain/loans/products'
+} from '#/domain/amortisation'
+import { calculateApprovalScore } from '@/domain/approvalScore'
+import { calculateInterestRate } from '@/domain/products'
 import type {
   LoanEligibilityRequest,
   LoanEligibilityResponse,
