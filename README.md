@@ -9,6 +9,7 @@ The application then returns an estimated eligibility result from a transparent 
 - React with TanStack Start and TanStack Router
 - TanStack Query for server communication
 - Zustand for global client state
+- CSS
 - Tailwind CSS
 - Shadcn as a ui components base
 - Zod as a product wide validation engine
