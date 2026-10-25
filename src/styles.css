@@ -55,6 +55,11 @@
   --ring: #087747;
   --radius: 0.5rem;
 
+  --layer-select: 40;
+  --layer-modal: 50;
+  --layer-tooltip-overlay: 90;
+  --layer-tooltip: 100;
+
   --layout-page-inline: 1.25rem;
   --layout-page-block: 1.5rem;
   --layout-flow-start: 2rem;

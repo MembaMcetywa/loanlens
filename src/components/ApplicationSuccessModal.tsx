@@ -51,7 +51,7 @@ const ApplicationSuccessModal = ({
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 px-(--layout-page-inline) backdrop-blur-sm transition-opacity duration-150 ${isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'}`}
+      className={`fixed inset-0 flex items-center justify-center bg-foreground/30 px-(--layout-page-inline) backdrop-blur-sm transition-opacity duration-150 z-(--layer-modal) ${isOpen ? 'opacity-100' : 'pointer-events-none invisible opacity-0'}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="application-success-title"
