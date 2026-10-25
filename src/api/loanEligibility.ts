@@ -3,8 +3,8 @@ import { createServerFn } from '@tanstack/react-start'
 
 import { calculateLoanEligibility } from '@/domain/loans/eligibilityEngine'
 import { findLoanProductByPurpose } from '@/domain/loans/products'
-import { validateLoan } from '@/lib/loanValidation'
 import type { LoanEligibilityRequest } from '@/types/loan'
+import { validateLoan } from '@/utils/loanValidation'
 
 const responseDelay = 800
 
