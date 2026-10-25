@@ -153,7 +153,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             sideOffset={8}
             collisionPadding={16}
             avoidCollisions
-            className="w-72 rounded-lg border border-border bg-background px-4 py-3 text-foreground shadow-lg [z-index:var(--layer-tooltip)]"
+            className="animate-desktop-tooltip-enter w-72 rounded-lg border border-border bg-background px-4 py-3 text-foreground shadow-lg [z-index:var(--layer-tooltip)]"
             onClick={handleContentClick}
             onOpenAutoFocus={(event) => event.preventDefault()}
             onCloseAutoFocus={(event) => event.preventDefault()}
