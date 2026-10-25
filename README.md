@@ -37,6 +37,7 @@ npm run dev:mobile
 Scan the QR code shown in the terminal.
 
 ## Run unit tests
+To run unit tests, use:
 
 ```bash
 npm run test
