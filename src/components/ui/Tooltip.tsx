@@ -67,6 +67,10 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
     event.stopPropagation()
   }
 
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
   const content = (
     <>
       <p id={titleId} className="font-semibold text-current">
@@ -104,6 +108,14 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             onClick={handleContentClick}
           >
             {content}
+            <Button
+              type="button"
+              size="lg"
+              className="mt-5 w-full"
+              onClick={handleClose}
+            >
+              Understood
+            </Button>
           </div>,
           document.body,
         )
@@ -149,6 +161,11 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             onInteractOutside={(event) => event.preventDefault()}
           >
             {content}
+            <div className="mt-4 flex justify-end">
+              <Button type="button" onClick={handleClose}>
+                Understood
+              </Button>
+            </div>
             <Popover.Arrow className="fill-background stroke-border" />
           </Popover.Content>
         </Popover.Portal>
