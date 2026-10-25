@@ -108,7 +108,7 @@ const ApplicantDetailsScreen = ({
           disabled={!employmentDetailsEnabled}
         />
         <InputField
-          label="Employment duration (in months)"
+          label="Employment duration"
           name="employmentDuration"
           type="number"
           min={3}
@@ -120,6 +120,10 @@ const ApplicantDetailsScreen = ({
           }
           disabled={!employmentDetailsEnabled}
           required={employmentDetailsEnabled}
+          enableTooltip={employmentDetailsEnabled}
+          tooltipTitle="Employment duration"
+          tooltipBody="Please enter the number of months you have been employed at your current job."
+          tooltipPosition="top"
         />
       </div>
     </ApplicationScreen>
