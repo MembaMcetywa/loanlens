@@ -83,7 +83,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
       ? createPortal(
           <div
             data-slot="tooltip-overlay"
-            className="fixed inset-0 h-dvh z-(--layer-tooltip-overlay)"
+            className="fixed inset-0 h-dvh bg-black/30 z-(--layer-tooltip-overlay)"
             aria-hidden="true"
             onClick={handleOverlayClick}
           />,
@@ -100,7 +100,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             role="tooltip"
             aria-labelledby={titleId}
             aria-describedby={bodyId}
-            className="fixed inset-x-0 bottom-0 w-full rounded-t-xl bg-foreground px-(--layout-page-inline) pt-5 pb-[max(var(--layout-page-block),env(safe-area-inset-bottom))] text-background shadow-xl [z-index:var(--layer-tooltip)]"
+            className="fixed inset-x-[var(--layout-page-inline)] bottom-[max(var(--layout-page-block),env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_(var(--layout-page-block)_*_2))] overflow-y-auto rounded-xl border border-border bg-background p-5 text-foreground shadow-xl [z-index:var(--layer-tooltip)]"
             onClick={handleContentClick}
           >
             {content}
@@ -141,7 +141,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             sideOffset={8}
             collisionPadding={16}
             avoidCollisions
-            className="w-72 rounded-lg bg-foreground px-4 py-3 text-background shadow-lg [z-index:var(--layer-tooltip)]"
+            className="w-72 rounded-lg border border-border bg-background px-4 py-3 text-foreground shadow-lg [z-index:var(--layer-tooltip)]"
             onClick={handleContentClick}
             onOpenAutoFocus={(event) => event.preventDefault()}
             onCloseAutoFocus={(event) => event.preventDefault()}
@@ -149,7 +149,7 @@ const Tooltip = ({ position, title, body }: TooltipProps) => {
             onInteractOutside={(event) => event.preventDefault()}
           >
             {content}
-            <Popover.Arrow className="fill-foreground" />
+            <Popover.Arrow className="fill-background stroke-border" />
           </Popover.Content>
         </Popover.Portal>
       ) : null}
