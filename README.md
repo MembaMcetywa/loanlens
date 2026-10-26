@@ -287,7 +287,7 @@ priority:
 ## Supplied mock-data findings and assumptions
 
 The supplied example contains values that cannot come from one consistent formula.
-LoanLens treats the input fields as authoritative and recalculates derived values.
+LoanLens treats the input fields as authoritative, in terms of schema properties, and recalculates derived values.
 
 - The supplied LTI is 60%. `R150,000 / (R25,000 * 12)` is 50%, so LoanLens uses
   50%.
