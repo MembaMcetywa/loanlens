@@ -5,6 +5,11 @@ import { ApplicationScreen } from '@/components/ApplicationScreen'
 import type { EligibilityFlowScreenProps } from '@/components/ApplicationScreen'
 import { InputField } from '@/components/ui/InputField'
 import { SelectField } from '@/components/ui/SelectField'
+import {
+  getFieldErrors,
+  requiresEmploymentDetails,
+  validateApplicantDetails,
+} from '@/utils/loanValidation'
 
 const employmentOptions = [
   { value: 'employed', label: 'Employed' },
@@ -23,15 +28,15 @@ const ApplicantDetailsScreen = ({
   onContinue,
 }: EligibilityFlowScreenProps) => {
   const [formData, setFormData] = React.useState(data)
+  const [errors, setErrors] = React.useState<Record<string, string>>({})
   const [isNameTyping, setIsNameTyping] = React.useState(false)
   const firstName = formData.firstName
   const employmentStatus = formData.employmentStatus
-  const employmentDetailsEnabled = ['employed', 'self_employed'].includes(
-    employmentStatus,
-  )
+  const employmentDetailsEnabled = requiresEmploymentDetails(employmentStatus)
 
   const updateField = (field: string, value: string) => {
     setFormData((currentData) => ({ ...currentData, [field]: value }))
+    setErrors((currentErrors) => ({ ...currentErrors, [field]: '' }))
   }
 
   const handleFirstNameChange = (
@@ -41,7 +46,29 @@ const ApplicantDetailsScreen = ({
     updateField('firstName', event.target.value)
   }
 
-  const handleContinue = () => onContinue(formData)
+  const handleEmploymentStatusChange = (value: string) => {
+    updateField('employmentStatus', value)
+
+    if (!requiresEmploymentDetails(value)) {
+      setErrors((currentErrors) => ({
+        ...currentErrors,
+        companyName: '',
+        employmentDuration: '',
+      }))
+    }
+  }
+
+  const handleContinue = () => {
+    const validation = validateApplicantDetails(formData)
+
+    if (!validation.success) {
+      setErrors(getFieldErrors(validation.error))
+      return
+    }
+
+    setErrors({})
+    onContinue(formData)
+  }
 
   return (
     <ApplicationScreen
@@ -67,7 +94,7 @@ const ApplicantDetailsScreen = ({
           value={firstName}
           onChange={handleFirstNameChange}
           onBlur={() => setIsNameTyping(false)}
-          required
+          error={errors.firstName}
         />
         <InputField
           label="Surname"
@@ -76,18 +103,17 @@ const ApplicantDetailsScreen = ({
           placeholder="Enter surname"
           value={formData.surname}
           onChange={(event) => updateField('surname', event.target.value)}
-          required
+          error={errors.surname}
         />
         <InputField
           label="Age"
           name="age"
           type="number"
-          min={18}
           inputMode="numeric"
           placeholder="Enter age"
           value={formData.age}
           onChange={(event) => updateField('age', event.target.value)}
-          required
+          error={errors.age}
         />
         <SelectField
           label="Employment status"
@@ -95,8 +121,8 @@ const ApplicantDetailsScreen = ({
           placeholder="Select employment status"
           options={employmentOptions}
           value={employmentStatus}
-          onValueChange={(value) => updateField('employmentStatus', value)}
-          required
+          onValueChange={handleEmploymentStatusChange}
+          error={errors.employmentStatus}
         />
         <InputField
           label="Company name"
@@ -106,12 +132,12 @@ const ApplicantDetailsScreen = ({
           value={formData.companyName}
           onChange={(event) => updateField('companyName', event.target.value)}
           disabled={!employmentDetailsEnabled}
+          error={errors.companyName}
         />
         <InputField
           label="Employment duration"
           name="employmentDuration"
           type="number"
-          min={3}
           inputMode="numeric"
           placeholder="Enter months employed"
           value={formData.employmentDuration}
@@ -119,7 +145,7 @@ const ApplicantDetailsScreen = ({
             updateField('employmentDuration', event.target.value)
           }
           disabled={!employmentDetailsEnabled}
-          required={employmentDetailsEnabled}
+          error={errors.employmentDuration}
           enableTooltip={employmentDetailsEnabled}
           tooltipTitle="Employment duration"
           tooltipBody="Please enter the number of months you have been employed at your current job."

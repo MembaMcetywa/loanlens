@@ -50,7 +50,7 @@ const InputField = ({
 
   return (
     <div className="grid gap-2" data-disabled={disabled || undefined}>
-      <div className="flex items-center gap-1">
+      <div className="flex min-h-7 items-center gap-1">
         <Label
           htmlFor={inputId}
           className={cn(disabled && 'text-muted-foreground')}

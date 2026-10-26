@@ -9,6 +9,7 @@ import { SelectField } from '@/components/ui/SelectField'
 import { findLoanProduct, loanProducts } from '@/domain/products'
 import { useLoanApplicationStore } from '@/stores/loanApplicationStore'
 import type { LoanProductId, LoanPurpose } from '@/types/loan'
+import { getFieldErrors, validateLoanDetails } from '@/utils/loanValidation'
 
 const productOptions = loanProducts.map((product) => ({
   value: product.id,
@@ -34,6 +35,7 @@ const LoanDetailsScreen = ({
   onContinue,
 }: EligibilityFlowScreenProps) => {
   const [formData, setFormData] = React.useState(data)
+  const [errors, setErrors] = React.useState<Record<string, string>>({})
   const selectedProduct = findLoanProduct(formData.loanProduct as LoanProductId)
   const purposeOptions =
     selectedProduct?.purposes.map((purpose) => ({
@@ -53,6 +55,7 @@ const LoanDetailsScreen = ({
 
   const updateField = (field: string, value: string) => {
     setFormData((currentData) => ({ ...currentData, [field]: value }))
+    setErrors((currentErrors) => ({ ...currentErrors, [field]: '' }))
   }
 
   const handleProductChange = (value: string) => {
@@ -61,9 +64,22 @@ const LoanDetailsScreen = ({
       loanProduct: value,
       loanPurpose: '',
     }))
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      loanProduct: '',
+      loanPurpose: '',
+    }))
   }
 
   const handleContinue = () => {
+    const validation = validateLoanDetails(formData, selectedProduct)
+
+    if (!validation.success) {
+      setErrors(getFieldErrors(validation.error))
+      return
+    }
+
+    setErrors({})
     saveCurrentStep(formData)
 
     eligibilityMutation.mutate(createLoanEligibilityRequest(), {
@@ -93,7 +109,7 @@ const LoanDetailsScreen = ({
           options={productOptions}
           value={formData.loanProduct}
           onValueChange={handleProductChange}
-          required
+          error={errors.loanProduct}
         />
         <SelectField
           label="Loan purpose"
@@ -103,31 +119,29 @@ const LoanDetailsScreen = ({
           value={formData.loanPurpose}
           onValueChange={(value) => updateField('loanPurpose', value)}
           disabled={!selectedProduct}
-          required
+          error={errors.loanPurpose}
         />
         <InputField
           label="Loan amount"
           name="requestedAmount"
           type="number"
-          min={5000}
           inputMode="decimal"
           placeholder="Enter loan amount"
           value={formData.requestedAmount}
           onChange={(event) =>
             updateField('requestedAmount', event.target.value)
           }
-          required
+          error={errors.requestedAmount}
         />
         <InputField
           label="Loan term"
           name="loanTerm"
           type="number"
-          min={6}
           inputMode="numeric"
           placeholder="Enter term in months"
           value={formData.loanTerm}
           onChange={(event) => updateField('loanTerm', event.target.value)}
-          required
+          error={errors.loanTerm}
         />
       </div>
     </ApplicationScreen>

@@ -75,7 +75,11 @@ const ApplicationScreen = ({
             ) : null}
           </header>
 
-          <form className="mt-(--layout-content-gap)" onSubmit={handleSubmit}>
+          <form
+            className="mt-(--layout-content-gap)"
+            noValidate
+            onSubmit={handleSubmit}
+          >
             {children}
 
             <div className="mt-(--layout-action-gap) grid gap-3 sm:flex sm:flex-row-reverse sm:justify-start">
