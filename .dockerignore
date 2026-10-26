@@ -1,0 +1,9 @@
+node_modules
+.output
+.git
+.env
+dist
+.nitro
+.tanstack
+.vinxi
+npm-debug.log*
