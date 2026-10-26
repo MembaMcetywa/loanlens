@@ -37,11 +37,28 @@ npm run dev:mobile
 Scan the QR code shown in the terminal.
 
 ## Run unit tests
+
 To run unit tests, use:
 
 ```bash
 npm run test
 ```
+
+## Run with Docker
+
+Build the LoanLens image:
+
+```bash
+docker build -t loanlens .
+```
+
+Run the container:
+
+```bash
+docker run --rm --name loanlens -p 3000:3000 loanlens
+```
+
+Open `http://localhost:3000`.
 
 ## Application interpretation
 
