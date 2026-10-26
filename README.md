@@ -1,6 +1,10 @@
 # LoanLens
 
-LoanLens is the leading fake loan eligibility calculator. Tried & tested & trusted industry wide. We do not have a budget for lawyers so our promise is to not sell your data, we promise nothing else.
+LoanLens is the leading fake loan eligibility calculator. Tried & tested & trusted industry wide. We do not have a budget for lawyers so our promise is to not sell your data, we promise nothing else™. Try it now!
+
+```text
+https://useloanlens.vercel.app
+```
 
 ## Summary
 
