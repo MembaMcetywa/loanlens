@@ -70,7 +70,7 @@ Open `http://localhost:3000`.
 
 ## Application interpretation
 
-The customer selects a loan product and supplies every value needed by the
+The user selects a loan product and supplies every value needed by the
 eligibility engine. The selected product controls the permitted purposes, amount
 range, term range, and interest-rate range. The eligibility request retains the
 supplied schema; the server resolves the product from the selected purpose. The
