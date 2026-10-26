@@ -45,7 +45,7 @@ const SelectField = ({
     <div className="grid gap-2" data-disabled={disabled || undefined}>
       <Label
         htmlFor={selectId}
-        className={cn(disabled && 'text-muted-foreground')}
+        className={cn('min-h-7', disabled && 'text-muted-foreground')}
       >
         {label}
       </Label>
