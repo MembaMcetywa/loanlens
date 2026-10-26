@@ -1,13 +1,16 @@
 # LoanLens
 
-LoanLens is a responsive loan eligibility simulator. A customer supplies the
-personal, financial, and loan information defined by the supplied API contract.
-The application then returns an estimated eligibility result from a transparent decision policy.
+LoanLens is the leading fake loan eligibility calculator. Tried & tested & trusted industry wide. We do not have a budget for lawyers so our promise is to not sell your data, we promise nothing else.
+
+## Summary
+
+LoanLens works by explicitly requiring personal, financial, and loan information defined by the supplied API contract (mock data).
+The application then returns an estimated eligibility result from an assumed but consistent decision policy.
 
 ## Stack
 
 - React with TanStack Start and TanStack Router
-- TanStack Query for server communication
+- TanStack Query for "server" communication
 - Zustand for global client state
 - CSS
 - Tailwind CSS
@@ -18,6 +21,7 @@ The application then returns an estimated eligibility result from a transparent 
 - ESLint and Prettier
 - npm
 - dotLottie-react for lightweight animations
+- Docker
 
 ## Run locally
 
@@ -28,7 +32,7 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-To test on a phone connected to the same local network, run:
+To test on a phone connected to the same local network as your development machine, run:
 
 ```bash
 npm run dev:mobile
@@ -63,20 +67,19 @@ Open `http://localhost:3000`.
 ## Application interpretation
 
 The customer selects a loan product and supplies every value needed by the
-eligibility contract. The selected product controls the permitted purposes, amount
+eligibility engine. The selected product controls the permitted purposes, amount
 range, term range, and interest-rate range. The eligibility request retains the
 supplied schema; the server resolves the product from the selected purpose. The
 rate request sends the selected product as `loanType`.
 
-The supplied responses are seed data. They define the required schema and expected
-response shape, but inconsistent derived values are recalculated by the decision
-policy below.
+The supplied responses (the mock data) were used as seed data. They define the required schema and expected
+response shape, but inconsistent derived values are recalculated by the decision policy below.
 
 ## Request validation and cost control
 
-Invalid input does not start the TanStack Query mutation or create an eligibility
+The product flow follows the defensive programming philosophy. I.e., Users cannot proceed with invalid input at the input field level, invalid input also does not start the TanStack Query mutation or create an eligibility
 request. This early validation avoids requests and computation that cannot produce
-a useful result, which is important for a lender processing applications at scale in terms of cost savings.
+a useful result, which is important especially at scale in terms of cost savings because every request costs money.
 
 The client validates during input and again on submission. The request function
 validates immediately before network activity. The server repeats validation
@@ -94,11 +97,15 @@ The following cross-field rules apply:
 - Loan amount and term must stay within the selected product limits.
 - Credit score is required and must be from 300 through 850.
 
-Invalid input produces field errors, not a simulated lending decision.
 
 ## Decision policy
 
 ### Affordability
+
+```text
+DTI === Debt To Income
+LTI === Loan To Income
+```
 
 ```text
 disposable income = monthly income - monthly expenses
@@ -121,7 +128,7 @@ income.
 
 ### Approval score
 
-The approval score below is a documented engineering assumption, made in order to reach a consistent and reusable policy model.
+The approval score weight system below is an engineering assumption, made in order to reach a consistent and reusable policy model.
 
 | Factor                 | Weight |
 | ---------------------- | -----: |
@@ -152,7 +159,7 @@ Existing DTI points:
 | Above 40%-50% |           50 |
 | Above 50%     | Hard failure |
 
-New loan affordability is the average of the payment-use points and combined-DTI
+New loan affordability is the average of the payment points and combined-DTI
 points.
 
 | Payment / disposable income |       Points |
@@ -198,7 +205,7 @@ The final score is rounded to a whole number. A score of at least 60 is required
 Risk is low from 80 through 100, medium from 60 through 79, and high below 60.
 Affordability is good from 70 through 100, fair from 50 through 69, and poor below 50.
 
-### Interest and amortization
+### Interest and amortisation
 
 The credit score band positions the interest rate inside the selected product's
 rate range.
@@ -216,7 +223,7 @@ rate range.
 interest rate = minimum rate + (maximum rate - minimum rate) * position
 ```
 
-Monthly payments use the standard amortization formula:
+Monthly payments use the standard amortisation formula:
 
 ```text
 payment = principal * monthlyRate * (1 + monthlyRate)^term
@@ -230,7 +237,7 @@ maximum qualifying amount is rounded down to the nearest R100.
 
 Boundary values are inclusive. Applicants must be at least 18 years old. There is
 no maximum applicant age. Other inclusive boundaries include credit score 300 and
-850, three months of employment, 50% combined DTI, a payment equal to disposable
+850, a minimum three months of employment (if employed or self-employed), 50% combined DTI, a payment equal to disposable
 income, an approval score of 60, and all product limits.
 
 ## Eligibility response semantics
@@ -241,7 +248,7 @@ The eligibility engine applies this sequence:
 2. Resolve the selected product.
 3. Apply employment hard-stop rules.
 4. Derive the interest rate.
-5. Amortize the requested loan.
+5. Amortise the requested loan.
 6. Calculate the affordability metrics.
 7. Calculate the approval score.
 8. Decide whether the requested amount qualifies.
@@ -251,8 +258,8 @@ The eligibility engine applies this sequence:
 
 Response fields have these meanings:
 
-- `isEligible` describes the requested amount.
-- `approvalLikelihood` and `affordabilityAnalysis` describe the requested amount.
+- `isEligible` describes whether a user is eligible for the requested amount.
+- `approvalLikelihood` and `affordabilityAnalysis` describe how likely the user is to be approved for the requested amount.
 - `maxAmount` is the largest amount that passes every rule.
 - `recommendedAmount` is the requested amount when the request qualifies.
 - `recommendedAmount` is the lower `maxAmount` when the request does not qualify but
@@ -280,12 +287,12 @@ LoanLens treats the input fields as authoritative and recalculates derived value
 
 - The supplied LTI is 60%. `R150,000 / (R25,000 * 12)` is 50%, so LoanLens uses
   50%.
-- At 12.5% for 24 months, standard amortization produces a payment of approximately
+- At 12.5% for 24 months, standard amortisation produces a payment of approximately
   R7,096.10, not the supplied R7,089.50.
 - The supplied payment implies a nominal annual rate of approximately 12.406%, while
-  the supplied schedule entries are close to 12.5%.
+  the supplied schedule entries are close to 12.5% (12.4986% and 12.4974%) so 12.5% is assumed to be the value after rounding up.
 - The supplied `totalRepayment` is the supplied payment multiplied by 24. It is not
-  the total produced by standard amortization at 12.5%.
+  the total produced by standard amortisation at 12.5%.
 - At 12.5%, a R7,089.50 payment leaves approximately R178.81 unpaid after 24 months.
 - The supplied R180,000 maximum would require approximately R8,515.32 per month and
   produce approximately 54.06% combined DTI. This exceeds the accepted 50% limit.
